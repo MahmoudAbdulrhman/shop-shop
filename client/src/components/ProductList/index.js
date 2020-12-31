@@ -6,6 +6,7 @@ import { QUERY_CATEGORIES, QUERY_PRODUCTS } from "../../utils/queries";
 import spinner from "../../assets/spinner.gif"
 import { useStoreContext } from '../../utils/GlobalState';
 import { UPDATE_PRODUCTS } from '../../utils/actions';
+import { idbPromise } from '../../utils/helpers';
 
 function ProductList() {
   const [state, dispatch] = useStoreContext();
@@ -15,13 +16,30 @@ function ProductList() {
   const { loading, data } = useQuery(QUERY_PRODUCTS);
 
   useEffect(()=> {
-    if(data) {
+    // if there`s data to be stored
+    if (data) {
+      // let`s store it in the global state object
       dispatch({
         type: UPDATE_PRODUCTS,
         products: data.products
       });
+
+      // but let`s also thake each product and save it to indexedDB using the helper function
+      data.products.forEach((product) => {
+        idbPromise('products', 'put', product);
+      });
+      // add else if to check if `loading` is undefined in `useQuery()` hook
+    } else if (!loading){
+      // since we`re offline, get all of the data from `products`store
+      idbPromise('products', 'get').then((products) => {
+        //use retrieved data to set globle state for offline browsing
+        dispatch({
+          type: UPDATE_PRODUCTS,
+          products: ProductList
+        });
+      });
     }
-  }, [data, dispatch]);
+  }, [data, loading, dispatch]);
 
   function filterProducts() {
     if (!currentCategory) {

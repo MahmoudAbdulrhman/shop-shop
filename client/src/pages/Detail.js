@@ -8,7 +8,7 @@ import {
   ADD_TO_CART,
   UPDATE_PRODUCTS,
 } from '../utils/actions';
-
+import { idbPromise } from '../utils/helpers';
 import { QUERY_PRODUCTS } from "../utils/queries";
 import spinner from '../assets/spinner.gif';
 import Cart from '../components/Cart'
@@ -48,15 +48,30 @@ const removeFromCart = () => {
 }
 
 useEffect(() => {
+  // if already in globle store 
   if (products.length) {
-    setCurrentProduct(products.find(product => product._id === id));
-  } else if (data) {
+    setCurrentProduct(products.find(product => product._id === id ));
+  }
+  // retrieved from server
+  else if (data) {
     dispatch({
       type: UPDATE_PRODUCTS,
-      products: data.products
+      product: data.products
+    });
+    data.products.forEach((product) => {
+      idbPromise('products', 'put', product);
     });
   }
-}, [products, data, dispatch, id]);
+  // get cache from idb
+  else if (!loading) {
+    idbPromise('products', 'get').then((indexedProducts) => {
+      dispatch({
+        type: UPDATE_PRODUCTS,
+        products: indexedProducts
+      });
+    });
+  }
+}, [products, data, loading, dispatch, id]);
 
 
   return (
