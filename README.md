@@ -50,13 +50,10 @@ This app use Redux as Predictable State Container for JS Apps to helps you write
 
 # Screenshot
 
-![Screenshot](images/1.png)
-
-![Screenshot](images/2.PNG)
-
-![Screenshot](images/3.PNG)
-
-![Screenshot](images/4.PNG)
+![Screenshot](assets/images/1.png)
+![Screenshot](assets/images/2.PNG)
+![Screenshot](assets/images/3.PNG)
+![Screenshot](assets/images/4.PNG)
 
 # Questions
 
