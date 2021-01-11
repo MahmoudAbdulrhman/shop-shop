@@ -11,6 +11,7 @@
     "seed": "cd server && npm run seed",
     "heroku-postbuild": "cd client && npm run build"
   },
+  
   "author": "",
   "license": "ISC",
   "dependencies": {
