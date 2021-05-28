@@ -39,7 +39,7 @@ This app use Redux as Predictable State Container for JS Apps to helps you write
 
 ```install
 - Cloning of the repository is an option. Otherwise, visiting the deployed website is fine.
-- Install npm packages by running 'npm i' in your terminal
+- Install npm packages by running 'npm i' in your terminal, npm install --save graphql, npm run seed
 - Run 'npm start' to begin application
 ```
 

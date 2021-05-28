@@ -11,10 +11,10 @@
     "seed": "cd server && npm run seed",
     "heroku-postbuild": "cd client && npm run build"
   },
-  
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "graphql": "^15.5.0",
     "if-env": "^1.0.4"
   },
   "devDependencies": {
